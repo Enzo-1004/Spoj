@@ -8,7 +8,7 @@ public class alunoNota{
     private double nota;
     
     public void setNome(Scanner leia) {
-        System.out.print("Digite o nome do aluno: ");
+        System.out.print("Digite o nome do aluno (acentos não são lidos): ");
         String nome = leia.nextLine();
         nome.substring(0, Math.min(nome.length(), 20));
         this.nome = nome;        
@@ -24,18 +24,17 @@ public class alunoNota{
         do { // TESTES PARA CADA NOVA NOTA QUE FOR INSERIDA
             erro = false;
             try{
-                System.out.print("Digite a nota de "+this.nome+"(min=0, max=10): ");
+                System.out.print("Digite a nota de "+this.nome+" (min=0, max=10): ");
                 nota = leia.nextDouble();
+                leia.nextLine();
                 if(nota<0 || nota>10)
                     throw new IllegalArgumentException("Digite um numero entre 0 e 10!");
             } catch (IllegalArgumentException e) {
                 erro = true;
                 System.out.println("Erro: " + e.getMessage());
-                leia.nextLine();
             } catch(InputMismatchException e){
                 erro = true;
                 System.out.println("Erro: Valor Inválido!");
-                leia.nextLine();
             }
         } while (erro);
         this.nota = nota;

@@ -2,20 +2,21 @@ package exercicio1;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Comparator;
 
 public class quemSeraReprovado{
-    Scanner leia = new Scanner(System.in);
     public static void main(String[] args) {
-        Scanner leia = new Scanner(System.in);
+        System.out.println("---------------Início do Programa---------------\n");
+        Scanner leia = new Scanner(System.in, StandardCharsets.UTF_8); // DEVERIA FAZER COM QUE ACENTOS PUDESSEM SER LIDOS 
         int n=0;
         boolean erro;
         do {  // TESTE DO NÚMERO DE ALUNOS
             erro = false;
             try{
-                System.out.print("Digite o número de alunos(min=1, max=100): ");
+                System.out.print("Digite o número de alunos (min=1, max=100): ");
                 n = leia.nextInt();
                 if(n<1 || n>100)
                     throw new IllegalArgumentException("Digite um número entre 1 e 100!");
@@ -30,16 +31,17 @@ public class quemSeraReprovado{
             }
         } while (erro);
         quemSeraReprovado user = new quemSeraReprovado();
-        List<alunoNota> lista = user.fazerLista(n); // FAZ UMA LISTA COM O TAMANHO QUE O USUÁRIO DIGITOU
+        List<alunoNota> lista = user.fazerLista(n, leia); // FAZ UMA LISTA COM O TAMANHO QUE O USUÁRIO DIGITOU
         alunoNota piorAluno = user.descobrirReprovado(lista); // PEGA A LISTA E RETORNA O PIOR ALUNO, COM BASE NOS CRITÉRIOS DO EXERCÍCIO
         System.out.println("\nO aluno reprovado é: " + piorAluno.getNome() + "\nCom a nota: " + piorAluno.getNota());
-        System.out.println("Fim do Programa!");
+        System.out.println("---------------Fim do Programa---------------\n");
 
         leia.close();
     }
 
-    public List<alunoNota> fazerLista(int n){
+    public List<alunoNota> fazerLista(int n, Scanner leia){
         List<alunoNota> lista = new ArrayList<>();
+        leia = new Scanner(System.in);
         boolean erro;
         for (int i = 0; i < n; i++) { // ADICIONANDO N ALUNOS NA LISTA
             System.out.println();
@@ -48,11 +50,10 @@ public class quemSeraReprovado{
                 erro = false;      
                 try{ // TESTE PARA VER SE O NOME É REPETIDO
                     novoAluno.setNome(leia);
-                    if(lista.stream().anyMatch(item -> item.getNome().toUpperCase() == novoAluno.getNome().toUpperCase()))
+                    if(lista.stream().anyMatch(item -> item.getNome().trim().equalsIgnoreCase(novoAluno.getNome().trim())))
                         throw new IllegalArgumentException("Nome já cadastrado! Digite outro nome.");
                 } catch (IllegalArgumentException e){
                     System.out.println("Erro: " + e.getMessage());
-                    leia.nextLine();
                     erro=true;
                 }
             } while (erro);
@@ -79,10 +80,12 @@ public class quemSeraReprovado{
     }
 
     public List<alunoNota> ordemAlfabeticaPiores(List<alunoNota> lista) {
-        // FILTRA QUEM TEM A PIOR NOTA E ORDENA EM ORDEM ALFABÉTICA
+        // FILTRA QUEM TEM A PIOR NOTA PARA OUTRA LISTA E ORDENA EM ORDEM ALFABÉTICA
         // MAS REVERTE A ORDEM PARA QUE O NOME MAIS PERTO DE Z SEJA O PRIMEIRO
-        List<alunoNota> pioresAlunos = lista.stream().filter(n -> n.getNota() == lista.get(0).getNota()).toList();
-        pioresAlunos.sort(Comparator.comparing(alunoNota::getNome).reversed());
+        List<alunoNota> pioresAlunos = lista.stream()
+                .filter(n -> n.getNota() == lista.get(0).getNota())
+                .sorted(Comparator.comparing(alunoNota::getNome).reversed()) // ORDENA E REVERTE
+                .toList(); // DEIXA A LISTA IMUTÁVEL, POR ISSO JÁ USEI O SORT ANTES
         return pioresAlunos;
 
         /* TENTATIVA QUE PAREI NO MEIO:
