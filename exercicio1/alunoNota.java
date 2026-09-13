@@ -35,6 +35,7 @@ public class alunoNota{
             } catch(InputMismatchException e){
                 erro = true;
                 System.out.println("Erro: Valor Inválido!");
+                leia.nextLine();
             }
         } while (erro);
         this.nota = nota;
