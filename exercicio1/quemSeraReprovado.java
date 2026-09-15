@@ -33,7 +33,13 @@ public class quemSeraReprovado{
         quemSeraReprovado user = new quemSeraReprovado();
         List<alunoNota> lista = user.fazerLista(n, leia); // FAZ UMA LISTA COM O TAMANHO QUE O USUÁRIO DIGITOU
         alunoNota piorAluno = user.descobrirReprovado(lista); // PEGA A LISTA E RETORNA O PIOR ALUNO, COM BASE NOS CRITÉRIOS DO EXERCÍCIO
-        System.out.println("\nO aluno reprovado é: " + piorAluno.getNome() + "\nCom a nota: " + piorAluno.getNota());
+        int posicaoPiorAluno = 0;
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getNome().equals(piorAluno.getNome())) {
+                posicaoPiorAluno = i;
+            }
+        }
+        System.out.println("\nInstância " + posicaoPiorAluno +"\nO aluno reprovado é: " + piorAluno.getNome() + "\nCom a nota: " + piorAluno.getNota());
         System.out.println("---------------Fim do Programa---------------\n");
 
         leia.close();
@@ -46,6 +52,7 @@ public class quemSeraReprovado{
         for (int i = 0; i < n; i++) { // ADICIONANDO N ALUNOS NA LISTA
             System.out.println();
             alunoNota novoAluno = new alunoNota();
+            System.out.println("Instância " + i + ": ");
             do {
                 erro = false;      
                 try{ // TESTE PARA VER SE O NOME É REPETIDO
