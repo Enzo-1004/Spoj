@@ -1,4 +1,4 @@
-package exercicio1;
+package QuemSeraReprovado;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
