@@ -18,8 +18,8 @@ public class WindWaker {
             todosObjetivos[i][0] = objetivo[0];
             todosObjetivos[i][1] = objetivo[1];
         }
-        int melhorObjetivo = 0;
-        float melhorDistancia = 2000000000;
+        int melhorObjetivo = 1;
+        float melhorDistancia = 0;
         for (int i = 0; i < n; i++) {
             System.out.printf("\n-------------Caminho para objetivo %d-------------\n", i + 1);
             int x = atuaisCoordenadas[0];
@@ -111,6 +111,8 @@ public class WindWaker {
             if (W > 0)
                 System.out.printf("W=%d ", W);
 
+            if (i==0)
+                melhorDistancia = distanciaTotal;
 
             if (melhorDistancia > distanciaTotal) {
                 melhorObjetivo = i + 1;
