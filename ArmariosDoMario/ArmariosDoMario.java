@@ -44,7 +44,7 @@ public class ArmariosDoMario {
         for (int i = 0; i <= l.length -n +1; i++) {
             int numDeInteracoes = n-1;
 
-            for (int j = 1; j < n-1; j++) {
+            for (int j = 1; j <= n-1; j++) {
                 if (l[i + j] <= l[i]+n-1) {
                     numDeInteracoes--;
                 }
