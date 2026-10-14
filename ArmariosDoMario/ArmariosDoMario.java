@@ -27,25 +27,29 @@ public class ArmariosDoMario {
         for (int i = 0; i < l.length - 1; i++) { // Bubble sort
             trocou = false;
             for (int j = 0; j < l.length - i - 1; j++) {
-                if (l[j] < l[j + 1]) {
-                    int temp = l[j];
-                    l[j] = l[j + 1];
-                    l[j + 1] = temp;
+                if (l[j] > l[j + 1]) {
+                    int temp = l[j+1];
+                    l[j+1] = l[j];
+                    l[j] = temp;
                     trocou = true;
                 }
             }
-            if (!trocou)
+            if (!trocou){
                 break;
+            }
         }
 
-        int melhorNumDeInteracoes = n;
+        int melhorNumDeInteracoes = n-1;
         int dica = 1;
-        for (int i = 0; i <= l.length - n+1; i++) {
-            int numDeInteracoes = n;
+        for (int i = 0; i <= l.length -n +1; i++) {
+            int numDeInteracoes = n-1;
 
-            for (int j = 0; j < n-1; j++) {
-                if (l[i] + j == l[i + j]) {
+            for (int j = 1; j < n-1; j++) {
+                if (l[i + j] <= l[i]+n-1) {
                     numDeInteracoes--;
+                }
+                else{
+                    break;
                 }
             }
 
